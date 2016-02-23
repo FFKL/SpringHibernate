@@ -23,6 +23,8 @@ public class Main {
         storage.add(new Message(user, "texttext"));*/
         final HibernateStorage storage = new HibernateStorage();
         System.out.println(storage.values());
+        final RoleStorage storage1 = new RoleStorage();
+        storage1.add(new Role("Client"));
         /*final HibernateStorage storage = new HibernateStorage();
         Role role = new Role();
         role.setName("admin");

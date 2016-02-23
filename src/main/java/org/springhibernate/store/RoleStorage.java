@@ -29,12 +29,11 @@ public class RoleStorage {
         }
     }
 
-    public int add(final Role role) {
+    public void add(final Role role) {
         final Session session = factory.openSession();
         Transaction tx = session.beginTransaction();
         try {
             session.save(role);
-            return role.getId();
         } finally {
             tx.commit();
             session.close();
