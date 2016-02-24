@@ -1,92 +1,61 @@
 package org.springhibernate.store;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.springhibernate.models.Base;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.HibernateTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springhibernate.models.Role;
-import org.springhibernate.models.User;
 
 import java.util.Collection;
+import java.util.List;
 
-public class RoleStorage {
+@Repository
+public class RoleStorage implements RoleDAO {
 
-    private final SessionFactory factory;
+    private final HibernateTemplate template;
 
-    public RoleStorage() {
-        factory = new Configuration().configure().buildSessionFactory();
-    }
-    public Collection<User> values() {
-        final Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            return session.createQuery("from Role").list();
-        } finally {
-            tx.commit();
-            session.close();
-        }
+    @Autowired
+    public RoleStorage(final HibernateTemplate template) {
+        this.template = template;
     }
 
-    public void add(final Role role) {
-        final Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            session.save(role);
-        } finally {
-            tx.commit();
-            session.close();
-        }
+    @Override
+    public Collection<Role> values() {
+        return (List<Role>) this.template.find("from Role");
     }
 
-    public void edit(final Role role) {
-        final Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            session.update(role);
-        } finally {
-            tx.commit();
-            session.close();
-        }
+    @Transactional
+    @Override
+    public int add(Role user) {
+        return (int) this.template.save(user);
     }
 
+    @Override
+    public void edit(Role user) {
+    }
+
+    @Override
     public void delete(int id) {
-        final Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            session.delete(get(id));
-        } finally {
-            tx.commit();
-            session.close();
-        }
+
     }
 
+    @Override
     public Role get(int id) {
-        final Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            return (Role) session.get(Role.class, id);
-        } finally {
-            tx.commit();
-            session.close();
-        }
+        return null;
     }
 
-    public Role findByName(String name) {
-        final Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            final Query query = session.createQuery("from Role as role where role.name=:name");
-            query.setString("name", name);
-            return (Role) query.iterate().next();
-        } finally {
-            tx.commit();
-            session.close();
-        }
+    @Override
+    public Role findByLogin(String login) {
+        return null;
     }
 
+    @Override
+    public int generateId() {
+        return 0;
+    }
+
+    @Override
     public void close() {
-        this.factory.close();
+
     }
 }

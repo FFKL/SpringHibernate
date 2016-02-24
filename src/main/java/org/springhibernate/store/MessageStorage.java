@@ -1,40 +1,50 @@
 package org.springhibernate.store;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 import org.springhibernate.models.Message;
-import org.springhibernate.models.Role;
-import org.springhibernate.models.User;
 
 import java.util.Collection;
 
-public class MessageStorage {
-    private final SessionFactory factory;
+@Repository
+public class MessageStorage implements Storage<Message> {
 
-    public MessageStorage() {
-        factory = new Configuration().configure().buildSessionFactory();
-    }
-    public Collection<User> values() {
-        final Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            return session.createQuery("from Message").list();
-        } finally {
-            tx.commit();
-            session.close();
-        }
+    @Override
+    public Collection<Message> values() {
+        return null;
     }
 
-    public void add(final Message message) {
-        final Session session = factory.openSession();
-        Transaction tx = session.beginTransaction();
-        try {
-            session.save(message);
-        } finally {
-            tx.commit();
-            session.close();
-        }
+    @Override
+    public int add(Message user) {
+        return 0;
+    }
+
+    @Override
+    public void edit(Message user) {
+
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public Message get(int id) {
+        return null;
+    }
+
+    @Override
+    public Message findByLogin(String login) {
+        return null;
+    }
+
+    @Override
+    public int generateId() {
+        return 0;
+    }
+
+    @Override
+    public void close() {
+
     }
 }

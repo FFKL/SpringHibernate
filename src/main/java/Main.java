@@ -1,14 +1,6 @@
-import org.springhibernate.models.Message;
 import org.springhibernate.models.Role;
-import org.springhibernate.models.User;
-import org.springhibernate.store.HibernateStorage;
-import org.springhibernate.store.MessageStorage;
+import org.springhibernate.store.UserStorage;
 import org.springhibernate.store.RoleStorage;
-import org.springhibernate.store.Storage;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
 
 public class Main {
     public static void main(final String[] args) throws Exception {
@@ -21,11 +13,7 @@ public class Main {
         user.setEmail("test@test");
         user.setRole(role);
         storage.add(new Message(user, "texttext"));*/
-        final HibernateStorage storage = new HibernateStorage();
-        System.out.println(storage.values());
-        final RoleStorage storage1 = new RoleStorage();
-        storage1.add(new Role("Client"));
-        /*final HibernateStorage storage = new HibernateStorage();
+        /*final UserStorage storage = new UserStorage();
         Role role = new Role();
         role.setName("admin");
         User user = new User();

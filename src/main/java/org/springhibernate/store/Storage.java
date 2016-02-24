@@ -5,19 +5,19 @@ import org.springhibernate.models.User;
 
 import java.util.Collection;
 
-public interface Storage {
+public interface Storage<T> {
 
-    public Collection<?> values();
+    public Collection<T> values();
 
-    public int add(final Base base);
+    public int add(final T user);
 
-    public void edit(final Base base);
+    public void edit(final T user);
 
     public void delete(final int id);
 
-    public Base get(final int id);
+    public T get(final int id);
 
-    public Base findByLogin(final String login) ;
+    public T findByLogin(final String login) ;
 
     public int generateId();
 
